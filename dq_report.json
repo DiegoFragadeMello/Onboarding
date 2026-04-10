@@ -1,0 +1,11 @@
+{
+  "completude":{
+    "pressure":0.4464285714,
+    "temperature":0.4464285714
+  },
+  "outliers_z_score":12,
+  "outliers_iqr":22,
+  "adf_p_value":0.7581,
+  "gaps_detectados":0,
+  "correlacao_pearson":0.313
+}

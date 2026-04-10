@@ -1,0 +1,14 @@
+services:
+    timescaledb:
+        image: timescale/timescaledb:latest-pg16
+        container_name: tsdb_estagio
+        environment:
+            POSTGRES_USER: sequor
+            POSTGRES_PASSWORD: sequor123
+            POSTGRES_DB: sensor_demo
+        ports:
+            - "5432:5432"
+        volumes:
+            - tsdb_data:/var/lib/postgresql/data
+volumes:
+    tsdb_data:

@@ -1,0 +1,41 @@
+ENTREGA Checklist do Estagiário       ○○ - Não respondido ainda | ●○ - respondido sem revisão | ●● - Respondido e revisado
+
+Valide cada item com o seu tutor antes de considerar o onboarding concluído.
+
+    ●○ VSCode instalado com as 4 extensões obrigatórias ativas
+
+    ●○ Python 3.11+ via pyenv com virtualenv configurado
+
+    ●○ Docker Desktop rodando — comando docker compose up -d funciona
+
+    ●○ TimescaleDB acessível — consegue conectar via psql e via Python/SQLAlchemy
+
+    ●○ Schema criado: tabela sensor_readings convertida em hypertable
+
+    ●○ 10.000+ linhas inseridas via script Python com to_sql
+
+    ●○ Query com time_bucket retorna agregações horárias corretamente
+
+    ●○ Dataset com 3 tipos de anomalia gerado e salvo em parquet
+
+    ●○ Relatório DQ gerado em JSON com completude, outliers (Z+IQR), ADF, gaps e correlação
+
+    ●○ Dashboard PNG gerado com os 6 plots (A a F) sem erros
+
+    ●○ Consegue explicar verbalmente: por que IQR é mais robusto que Z-score em dados industriais
+       IQR ou Intervalo Interquartil descreve a diferença entre o terceiro quartil (Q3) e o primeiro quartil (Q1), isso ajuda na 
+       indentificação da amplitude da metade central da disperção.
+       O Score-Z por sua vez é uma medida estatistica que indica quantos desvios padrão um valor especifico está acima o  abaixo
+       da média. Ele padraniza os dados tambem mas para fins de interpretação de das probabilidades ou do  uso  da  tabela  z  é 
+       indispensavel que seja atendida a normalidade, pois o score z pressupõe uma média 0 e desvio padrão 1.
+       Em geral o IQR é mais robusto na perspectiva que não depende de nenhum fator muito  especifico  que  os dados  tenham  de
+       atender. Enquanto o Z-Score é uma medida de parametro baseada na média, e é ideal para distibuições normais, o IQR é  uma
+       medida não parametrica baseada na mediana, ideal para dados assimétricos.
+
+    ●○ Consegue explicar verbalmente: o que é drift e como o teste ADF detecta
+        O Drift em um sensor é quando por alguma falha que pode se instecificar com o tempo afeta aos poucos e  progressivamente
+        as medições. Algo como um sensor que junta sujeira e começa e começa a medir uma resistencia cada vez maior. Drift  para
+        a estatistica é quando os dados de uma série possuem uma tendencia deterministica. uma série sem Drift flutua  sem  uma 
+        direção previsivel, não é possivel dar um bom palpite sobre os proximos itens dela. O teste de  Dickey-Fuller  Aumentado
+        busca, atrávez de uma esquação de regressão com um termo representando o possivel valor do Drift, atestar a hipotese  da
+        série ter ou não uma tendencia e a regressão do ADF te diria QUANTO vale o Drift. 
