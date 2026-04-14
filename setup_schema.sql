@@ -1,27 +1,41 @@
 CREATE EXTENSION IF NOT EXISTS timescaledb;
 
+-- Dropar tabelas existentes
+DROP TABLE IF EXISTS events CASCADE;
+
+DROP TABLE IF EXISTS sensor_readings CASCADE;
+
+-- Tabela para leituras de sensores no formato narrow
 CREATE TABLE sensor_readings (
-    time TIMESTAMPTZ NOT NULL,
-    sensor_id TEXT NOT NULL,
-    pressure DOUBLE PRECISION, -- bar
-    temperature DOUBLE PRECISION -- celsius
+    timestamp TIMESTAMPTZ NOT NULL,
+    tag TEXT NOT NULL,
+    value DOUBLE PRECISION,
+    unit TEXT,
+    mode TEXT,
+    burner_cmd DOUBLE PRECISION,
+    load_factor DOUBLE PRECISION,
+    door_open INTEGER,
+    fan_cmd DOUBLE PRECISION,
+    error_type TEXT,
+    quality TEXT
 );
 
 SELECT create_hypertable (
-        'sensor_readings', 'time', chunk_time_interval = > INTERVAL '1 day'
+        'sensor_readings', 'timestamp', chunk_time_interval = > INTERVAL '1 day'
     );
 
-CREATE INDEX ON sensor_readings (sensor_id, time DESC);
+CREATE INDEX ON sensor_readings (tag, timestamp DESC);
 
-SELECT
-    time_bucket ('1 hour', time) AS bucket,
-    sensor_id,
-    AVG(pressure) AS avg_pressure,
-    MAX(temperature) AS max_temperature STDDEV(temperature) AS stddev_temperature
-FROM sensor_readings
-WHERE
-    time >= NOW() - INTERVAL '7 days'
-GROUP BY
-    bucket,
-    sensor_id
-ORDER BY bucket;
+-- Tabela para eventos
+CREATE TABLE events (
+    event_type TEXT,
+    signal TEXT,
+    error_kind TEXT,
+    start_ts TIMESTAMPTZ,
+    end_ts TIMESTAMPTZ,
+    magnitude DOUBLE PRECISION
+);
+
+SELECT create_hypertable (
+        'events', 'start_ts', chunk_time_interval = > INTERVAL '1 day'
+    );

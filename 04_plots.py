@@ -58,7 +58,7 @@ ax.set_xlabel("Pressão (bar)")
 ax.set_ylabel("Temperatura (°C)")
 ax.set_title("Pressão × Temperatura (correlação)")
 
-ax = axes[1, 3]
+ax = axes[2, 1]
 roll = df_clean["pressure"].rolling(60)
 rm = roll.mean()
 rs = roll.std()
@@ -110,7 +110,7 @@ ax.plot(rate, color="crimson")
 ax.set_title("Taxa de anomalias (rolling)")
 ax.set_ylabel("Proporção")
 
-ax = axes[2, 1]
+ax = axes[1, 3]
 ax.plot(df["timestamp"], df["temperature"], lw=0.4, alpha=0.7, color="steelblue")
 ax.set_title("Temperatura — série bruta + drift")
 ax.set_ylabel("°C")
